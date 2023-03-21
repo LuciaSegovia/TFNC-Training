@@ -2,6 +2,7 @@
 # Loading library
 library(tidyverse)
 
+
 # 1.1 Loading the apparent food consumption data 
 
 dataJ1 <- read.csv(here::here("..", "tz_2020", "data", "HH_SEC_J1.csv"))
