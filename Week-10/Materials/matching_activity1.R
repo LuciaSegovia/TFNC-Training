@@ -5,11 +5,13 @@ library(tidyverse)
 
 # 1.1 Loading the apparent food consumption data 
 
-dataJ1 <- read.csv(here::here("..", "tz_2020", "data", "HH_SEC_J1.csv"))
+dataJ1 <- read.csv(here::here("hces-data", "HH_SEC_J1.csv"))
 item_code <- read.csv(here::here("Week-10", "Materials",  "data", "food-id.csv"), header = TRUE)
 
 # check the data
 head(dataJ1)
+tail(dataJ1)
+View(dataJ1)
 names(dataJ1)
 str(dataJ1)
 dim(dataJ1)
