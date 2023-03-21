@@ -2,7 +2,6 @@
 # Loading library
 library(tidyverse)
 
-
 # 1.1 Loading the apparent food consumption data 
 
 dataJ1 <- read.csv(here::here("hces-data", "HH_SEC_J1.csv"))
@@ -37,7 +36,7 @@ names(item_code)
 
 # 2.1 Loading the food composition data
 
-tzfct <- read.csv(here::here("..",  "data", "TZ08_tidied_FCT_v2.CSV"))
+tzfct <- read.csv(here::here("Week-9","Materials",  "data", "TZ08_tidied_FCT_v2.CSV"))
 
 # check the data
 
@@ -60,6 +59,7 @@ tzfct %>% group_by(Food_Group) %>%  # grouping food items by food groups
 
 # Checking food categories
 tzfct %>% filter(Food_Group == "Cereal and Cereal products") 
+tzfct %>% filter(Food_Group_Code == "G1") %>% View()
 
 # Checking Food Components and units
 
