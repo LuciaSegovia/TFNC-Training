@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Food Matching Framework</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="food-matching_files/libs/clipboard/clipboard.min.js"></script>
+<script src="food-matching_files/libs/quarto-html/quarto.js"></script>
+<script src="food-matching_files/libs/quarto-html/popper.min.js"></script>
+<script src="food-matching_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="food-matching_files/libs/quarto-html/anchor.min.js"></script>
+<link href="food-matching_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="food-matching_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="food-matching_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="food-matching_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="food-matching_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#food-consumption-data" id="toc-food-consumption-data" class="nav-link active" data-scroll-target="#food-consumption-data">Food Consumption Data</a>
+  <ul class="collapse">
+  <li><a href="#identifying-obtaining-the-food-consumption-data" id="toc-identifying-obtaining-the-food-consumption-data" class="nav-link" data-scroll-target="#identifying-obtaining-the-food-consumption-data">1. Identifying &amp; obtaining the food consumption data</a></li>
+  <li><a href="#importing-loading-the-food-consumption-data" id="toc-importing-loading-the-food-consumption-data" class="nav-link" data-scroll-target="#importing-loading-the-food-consumption-data">2. Importing &amp; Loading the food consumption data</a></li>
+  </ul></li>
+  <li><a href="#food-composition-data" id="toc-food-composition-data" class="nav-link" data-scroll-target="#food-composition-data">Food Composition Data</a>
+  <ul class="collapse">
+  <li><a href="#identifying-obtaining-the-food-composition-data" id="toc-identifying-obtaining-the-food-composition-data" class="nav-link" data-scroll-target="#identifying-obtaining-the-food-composition-data">1. Identifying &amp; obtaining the food composition data</a></li>
+  <li><a href="#importing-loading-food-composition-tables" id="toc-importing-loading-food-composition-tables" class="nav-link" data-scroll-target="#importing-loading-food-composition-tables">2. Importing &amp; Loading Food Composition Tables</a></li>
+  <li><a href="#standardisation-of-the-food-composition-tables" id="toc-standardisation-of-the-food-composition-tables" class="nav-link" data-scroll-target="#standardisation-of-the-food-composition-tables">3. Standardisation of the Food Composition Tables</a></li>
+  <li><a href="#harmonising-the-food-composition-tables" id="toc-harmonising-the-food-composition-tables" class="nav-link" data-scroll-target="#harmonising-the-food-composition-tables">4. Harmonising the Food Composition Tables</a></li>
+  </ul></li>
+  <li><a href="#further-readings" id="toc-further-readings" class="nav-link" data-scroll-target="#further-readings">Further Readings</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Food Matching Framework</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="food-consumption-data" class="level2">
+<h2 class="anchored" data-anchor-id="food-consumption-data">Food Consumption Data</h2>
+<section id="identifying-obtaining-the-food-consumption-data" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-obtaining-the-food-consumption-data">1. Identifying &amp; obtaining the food consumption data</h3>
+<p><br> The <span class="green">apparent food consumption data</span> from the National Panel Survey (NPS 2019-2020) Extended Panel with Sex Disaggregated Data (NPS-DSS 2019-2020) is extracted from the Module J1. This dataset has been previously indentified, obtained and explored in previous week. As summary, the Module J1 provides information on the food consumed by the household over the past one week.</p>
+<p>For more information on this dataset, check the materials of Week 7 and 8.</p>
+</section>
+<section id="importing-loading-the-food-consumption-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-loading-the-food-consumption-data">2. Importing &amp; Loading the food consumption data</h3>
+<p>Before running this chunck of code make sure that you have downloaded and stored the Module J1 of the NPS-DSS 2019-2020 in your <code>data</code> folder. In addition, check that in the <code>Week-10/data</code> folder you can see a dataset called <code>food-id.csv</code> which we are loading together with the Module J1. More information about <code>food-id.csv</code> is provided in the next section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the apparent food consumption data </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dataJ1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>, <span class="st">"tz_2020"</span>, <span class="st">"data"</span>, <span class="st">"HH_SEC_J1.csv"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading food ids </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>item_code <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Week-10"</span>, <span class="st">"data"</span>, <span class="st">"food-id.csv"</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># check the data</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dataJ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  interview__key     sdd_hhid                   itemcode hh_j01 hh_j02_1
+1    69-04-74-63 0001-001-001               RICE (PADDY)     NO         
+2    69-04-74-63 0001-001-001              RICE (HUSKED)     NO         
+3    69-04-74-63 0001-001-001         MAIZE (GREEN, COB)     NO         
+4    69-04-74-63 0001-001-001              MAIZE (GRAIN)     NO         
+5    69-04-74-63 0001-001-001              MAIZE (FLOUR)     NO         
+6    69-04-74-63 0001-001-001 MILLET AND SORGHUM (GRAIN)     NO         
+  hh_j02_2 hh_j03_1 hh_j03_2 hh_j04 hh_j05_1 hh_j05_2 hh_j06_1 hh_j06_2
+1       NA                       NA                                    
+2       NA                       NA                                    
+3       NA                       NA                                    
+4       NA                       NA                                    
+5       NA                       NA                                    
+6       NA                       NA                                    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dataJ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "interview__key" "sdd_hhid"       "itemcode"       "hh_j01"        
+ [5] "hh_j02_1"       "hh_j02_2"       "hh_j03_1"       "hh_j03_2"      
+ [9] "hh_j04"         "hh_j05_1"       "hh_j05_2"       "hh_j06_1"      
+[13] "hh_j06_2"      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataJ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   71040 obs. of  13 variables:
+ $ interview__key: chr  "69-04-74-63" "69-04-74-63" "69-04-74-63" "69-04-74-63" ...
+ $ sdd_hhid      : chr  "0001-001-001" "0001-001-001" "0001-001-001" "0001-001-001" ...
+ $ itemcode      : chr  "RICE (PADDY)" "RICE (HUSKED)" "MAIZE (GREEN, COB)" "MAIZE (GRAIN)" ...
+ $ hh_j01        : chr  "NO" "NO" "NO" "NO" ...
+ $ hh_j02_1      : chr  "" "" "" "" ...
+ $ hh_j02_2      : num  NA NA NA NA NA NA 7 NA NA NA ...
+ $ hh_j03_1      : chr  "" "" "" "" ...
+ $ hh_j03_2      : chr  "" "" "" "" ...
+ $ hh_j04        : int  NA NA NA NA NA NA 4800 NA NA NA ...
+ $ hh_j05_1      : chr  "" "" "" "" ...
+ $ hh_j05_2      : chr  "" "" "" "" ...
+ $ hh_j06_1      : chr  "" "" "" "" ...
+ $ hh_j06_2      : chr  "" "" "" "" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dataJ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 71040    13</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(item_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  item_id                   itemcode
+1     101               RICE (PADDY)
+2     102              RICE (HUSKED)
+3     103         MAIZE (GREEN, COB)
+4     104              MAIZE (GRAIN)
+5     105              MAIZE (FLOUR)
+6     106 MILLET AND SORGHUM (GRAIN)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(item_code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "item_id"  "itemcode"</code></pre>
+</div>
+</div>
+<p>For this exercise, we are only interested in the food items that were consumed and the number of households that consumed each food item.</p>
+<p>We are using the pipe to do all the operations needed in one code chuck (code block).</p>
+<p>You should be familiar with each independent function as all of them have been used before. You can have more information about each individual tasks in the scripts used in Week-8 and Week-9.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generating the food list of food consumed by the HH in Tanzania</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>(food_consumed <span class="ot">&lt;-</span>  dataJ1 <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">cons_yn =</span> hh_j01) <span class="sc">%&gt;%</span>  <span class="co"># renaming variable</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(                                <span class="co"># changing variable class</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">itemcode =</span> <span class="fu">as.factor</span>(itemcode),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cons_yn =</span> <span class="fu">as.factor</span>(cons_yn)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cons_yn <span class="sc">==</span> <span class="st">"YES"</span>) <span class="sc">%&gt;%</span>     <span class="co"># filtering food reported as consumed </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(itemcode) <span class="sc">%&gt;%</span>           <span class="co"># counting number of HH consuming a food</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">arrange</span>(<span class="fu">desc</span>(n))) <span class="co"># sorting foods by most HH reporting consuming that food</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                   itemcode    n
+1                                                      SALT 1089
+2  ONIONS, TOMATOES, CARROTS AND GREEN PEPPER, OTHER VIUNGO 1045
+3                                               COOKING OIL  978
+4                                             MAIZE (FLOUR)  940
+5                                                     SUGAR  877
+6               SPINACH, CABBAGE AND OTHER GREEN VEGETABLES  875
+7                     PEAS, BEANS, LENTILS AND OTHER PULSES  834
+8                                             RICE (HUSKED)  748
+9                                                   TEA DRY  667
+10                 FRESH FISH AND SEAFOOD (INCLUDING DAGAA)  646
+11       DRIED/SALTED/CANNED FISH AND SEAFOOD (INCL. DAGAA)  459
+12                                 BUNS, CAKES AND BISCUITS  453
+13                            BEEF INCLUDING MINCED SAUSAGE  420
+14                                            CASSAVA FRESH  383
+15         CITRUS FRUITS (ORANGES, LEMON, TANGERINES, ETC.)  375
+16                               COCONUTS (MATURE/IMMATURE)  374
+17                               COOKING BANANAS, PLANTAINS  368
+18                      MANGOES, AVOCADOES AND OTHER FRUITS  349
+19                                           IRISH POTATOES  344
+20                                           SWEET POTATOES  335
+21                                             RIPE BANANAS  293
+22                                               FRESH MILK  262
+23                                                    BREAD  228
+24                                              WHEAT FLOUR  216
+25                              GROUNDNUTS IN SHELL/SHELLED  214
+26          BOTTLED/CANNED SOFT DRINKS (SODA, JUICE, WATER)  211
+27                                                     EGGS  207
+28                                CHICKEN AND OTHER POULTRY  206
+29                                        CASSAVA DRY/FLOUR  186
+30                                             OTHER SPICES  153
+31                                                SUGARCANE  140
+32          MILK PRODUCTS (LIKE CREAM, CHEESE, YOGHURT ETC)  110
+33                                      MACARONI, SPAGHETTI  106
+34                                       MAIZE (GREEN, COB)  103
+35                                            YAMS/COCOYAMS   99
+36                                            MAIZE (GRAIN)   97
+37                               MILLET AND SORGHUM (FLOUR)   89
+38   HONEY, SYRUPS, JAMS, MARMALADE, JELLIES, CANNED FRUITS   88
+39                                                GOAT MEAT   86
+40                        CANNED, DRIED AND WILD VEGETABLES   84
+41                                                   SWEETS   62
+42                        PORK INCLUDING SAUSAGES AND BACON   49
+43           BUTTER, MARGARINE, GHEE AND OTHER FAT PRODUCTS   41
+44                                              LOCAL BREWS   39
+45                           OTHER RAW MATERIALS FOR DRINKS   35
+46                                             BOTTLED BEER   23
+47                                    OTHER CEREAL PRODUCTS   15
+48                           CASHEW, ALMONDS AND OTHER NUTS   12
+49                                         COFFEE AND COCOA   11
+50                                  CANNED MILK/MILK POWDER   10
+51                                           OTHER STARCHES    6
+52                                             RICE (PADDY)    5
+53                    WHEAT, BARLEY GRAIN AND OTHER CEREALS    5
+54                                         WINE AND SPIRITS    5
+55                               MILLET AND SORGHUM (GRAIN)    4
+56   SEEDS AND PRODUCTS FROM NUTS/SEEDS (EXCL. COOKING OIL)    2
+57                        OTHER DOMESTIC/WILD MEAT PRODUCTS    1
+58                                     PREPARED TEA, COFFEE    1
+59                                   WILD BIRDS AND INSECTS    1</code></pre>
+</div>
+</div>
+<p>As you can see, the Module J1 csv file doesn’t provide the food id. that was used in the NPS-DSS 2019-2020, we have created (and loaded) a dataset with each food name and its food code (<code>item_id</code>). We are merging the two datasets (<code>food_consumed</code> and <code>item_id</code>) together to obtain the food id. of each food consumed by the households. In addition, we are changing the order of the columns to improve readability of the dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding the food id to the food consumed in Tanzania </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>(food_consumed <span class="ot">&lt;-</span> food_consumed <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(., item_code) <span class="sc">%&gt;%</span>  <span class="co">#Merging food ids. to the food consumed (food list)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(item_id, <span class="at">.before =</span> itemcode)) <span class="co"># Changing the order of the columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(itemcode)`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   item_id                                                 itemcode    n
+1     1003                                                     SALT 1089
+2      601 ONIONS, TOMATOES, CARROTS AND GREEN PEPPER, OTHER VIUNGO 1045
+3     1001                                              COOKING OIL  978
+4      105                                            MAIZE (FLOUR)  940
+5      301                                                    SUGAR  877
+6      602              SPINACH, CABBAGE AND OTHER GREEN VEGETABLES  875
+7      401                    PEAS, BEANS, LENTILS AND OTHER PULSES  834
+8      102                                            RICE (HUSKED)  748
+9     1101                                                  TEA DRY  667
+10     808                 FRESH FISH AND SEAFOOD (INCLUDING DAGAA)  646
+11     809       DRIED/SALTED/CANNED FISH AND SEAFOOD (INCL. DAGAA)  459
+12     110                                 BUNS, CAKES AND BISCUITS  453
+13     802                            BEEF INCLUDING MINCED SAUSAGE  420
+14     201                                            CASSAVA FRESH  383
+15     702         CITRUS FRUITS (ORANGES, LEMON, TANGERINES, ETC.)  375
+16     502                               COCONUTS (MATURE/IMMATURE)  374
+17     206                               COOKING BANANAS, PLANTAINS  368
+18     703                      MANGOES, AVOCADOES AND OTHER FRUITS  349
+19     205                                           IRISH POTATOES  344
+20     203                                           SWEET POTATOES  335
+21     701                                             RIPE BANANAS  293
+22     901                                               FRESH MILK  262
+23     109                                                    BREAD  228
+24    1081                                              WHEAT FLOUR  216
+25     501                              GROUNDNUTS IN SHELL/SHELLED  214
+26    1104          BOTTLED/CANNED SOFT DRINKS (SODA, JUICE, WATER)  211
+27     807                                                     EGGS  207
+28     804                                CHICKEN AND OTHER POULTRY  206
+29     202                                        CASSAVA DRY/FLOUR  186
+30    1004                                             OTHER SPICES  153
+31     704                                                SUGARCANE  140
+32     902          MILK PRODUCTS (LIKE CREAM, CHEESE, YOGHURT ETC)  110
+33     111                                      MACARONI, SPAGHETTI  106
+34     103                                       MAIZE (GREEN, COB)  103
+35     204                                            YAMS/COCOYAMS   99
+36     104                                            MAIZE (GRAIN)   97
+37     107                               MILLET AND SORGHUM (FLOUR)   89
+38     303   HONEY, SYRUPS, JAMS, MARMALADE, JELLIES, CANNED FRUITS   88
+39     801                                                GOAT MEAT   86
+40     603                        CANNED, DRIED AND WILD VEGETABLES   84
+41     302                                                   SWEETS   62
+42     803                        PORK INCLUDING SAUSAGES AND BACON   49
+43    1002           BUTTER, MARGARINE, GHEE AND OTHER FAT PRODUCTS   41
+44    1107                                              LOCAL BREWS   39
+45    1103                           OTHER RAW MATERIALS FOR DRINKS   35
+46    1106                                             BOTTLED BEER   23
+47     112                                    OTHER CEREAL PRODUCTS   15
+48     503                           CASHEW, ALMONDS AND OTHER NUTS   12
+49    1102                                         COFFEE AND COCOA   11
+50     903                                  CANNED MILK/MILK POWDER   10
+51     207                                           OTHER STARCHES    6
+52     101                                             RICE (PADDY)    5
+53    1082                    WHEAT, BARLEY GRAIN AND OTHER CEREALS    5
+54    1108                                         WINE AND SPIRITS    5
+55     106                               MILLET AND SORGHUM (GRAIN)    4
+56     504   SEEDS AND PRODUCTS FROM NUTS/SEEDS (EXCL. COOKING OIL)    2
+57     806                        OTHER DOMESTIC/WILD MEAT PRODUCTS    1
+58    1105                                     PREPARED TEA, COFFEE    1
+59     805                                   WILD BIRDS AND INSECTS    1</code></pre>
+</div>
+</div>
+<p>Finally, we have obtained a data.frame with the list of the foods consumed by the households, their food ids, and ordered by frequency of consumption (most to least). That dataset will be the base for the generating the Nutrient Conversion Table for nutrient intake assessment.</p>
+</section>
+</section>
+<section id="food-composition-data" class="level2">
+<h2 class="anchored" data-anchor-id="food-composition-data">Food Composition Data</h2>
+<section id="identifying-obtaining-the-food-composition-data" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-obtaining-the-food-composition-data">1. Identifying &amp; obtaining the food composition data</h3>
+<section id="identifying-the-food-composition-data-for-use-with-the-tanzania-nps-dss-2019-2020." class="level4">
+<h4 class="anchored" data-anchor-id="identifying-the-food-composition-data-for-use-with-the-tanzania-nps-dss-2019-2020.">1.1. Identifying the food composition data for use with the Tanzania NPS-DSS 2019-2020.</h4>
+<p>When identifying what <span class="dark-blue">food composition data</span> will be used, we need to answer some of the following questions (which are related to the presentation of Week 9 - How to choose FCTs?).</p>
+<ol type="1">
+<li>Relevancy for the study/context (e.g., geographically and culturally close).</li>
+<li>FCT availability &amp; missing values (e.g., relevant foods and nutrients are reported)</li>
+<li>Data quality and reporting (e.g., method of analysis, good metadata)</li>
+</ol>
+<section id="relevancy-for-the-studycontext-e.g.-geographically-and-culturally-close." class="level5">
+<h5 class="anchored" data-anchor-id="relevancy-for-the-studycontext-e.g.-geographically-and-culturally-close.">1.1.1. Relevancy for the study/context (e.g., geographically and culturally close).</h5>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What FCTs do you know from the region? And, what FCT would you use for this study?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are more than 19FCTs in the region, we have selected and are reported in the protocol the following:</p>
+<p><strong>Tanzania FCT, 2008</strong> &gt; Western Africa FCT, 2019 &gt; Kenya FCT, 2018 &gt; <span class="yellow">USDA FCT, 2019 &gt; UK FCT, 2020</span>. Other specific FCTs like uFish and/or uPulses may be used as well.</p>
+</div>
+</div>
+</div>
+<p>After selecting the most relevant FCT(s), we need to check whether it contains the information we need for the objective of our study.</p>
+</section>
+<section id="fct-availability-missing-values-e.g.-relevant-foods-and-nutrients-are-reported" class="level5">
+<h5 class="anchored" data-anchor-id="fct-availability-missing-values-e.g.-relevant-foods-and-nutrients-are-reported">1.1.2. FCT availability &amp; missing values (e.g., relevant foods and nutrients are reported)</h5>
+<p>Here, we need to check if the FCT(s) that we have selected contains the foods reported consumed in the household survey and the nutrients that we will be evaluating in our study.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How many foods are reported in the Tanzania FCT?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>378</p>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What nutrients and other food components are reported?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We need to report certain nutrients, do you know which ones? (Vitamin A, thiamine, riboflavin, niacin, folate, vitamin B6, vitamin B12, iron, and zinc)</p>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What nutrients and other important food components are missing?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Information of edible portion and water (moisture) content is missing.</p>
+</div>
+</div>
+</div>
+<p>Once, we have checked that most of the foods and nutrients that we need are reported in the FCT(s) selected, we need to check the quality of the data provided, as it would condition the results of our analysis.</p>
+</section>
+<section id="data-quality-and-reporting-e.g.-method-of-analysis-good-metadata" class="level5">
+<h5 class="anchored" data-anchor-id="data-quality-and-reporting-e.g.-method-of-analysis-good-metadata">1.1.3. Data quality and reporting (e.g., method of analysis, good metadata)</h5>
+<p>General quality checks are: the level of detail in the food description, the methods used for nutrient values compilation, and the documentation and degree of detail.</p>
+<p>Other quality checks that can be performed are: calculating sum of proximate and re-calculating the values of: Carbohydrates available by difference, energy, etc.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why are those components important for the food matching process?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 5
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Water content is essential to differentiate foods, and to identify if food are dry/fresh. In addition, for calculating SOP, re-calculating some food components, and it is vital for imputing values when necessary. ]</p>
+<p>Edible portion is necessary to calculate the part of the foods that people are consuming, and this is usually context specific. Hence, it should be reported in the national FCT.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="obtaining-the-food-composition-data-for-use-with-the-tanzania-nps-dss-2019-2020." class="level4">
+<h4 class="anchored" data-anchor-id="obtaining-the-food-composition-data-for-use-with-the-tanzania-nps-dss-2019-2020.">1.2. Obtaining the food composition data for use with the Tanzania NPS-DSS 2019-2020.</h4>
+<p><a href="http://www.hsph.harvard.edu/nutritionsource/food-tables/">Tanzania FCT, 2008</a> <br> <a href="https://www.fao.org/fileadmin/user_upload/faoweb/2020/WAFCT_2019.xlsx">Western Africa, 2019</a> <br> <a href="https://www.fao.org/3/I8897EN/i8897en.pdf">Kenya FCT, 2018</a> <br> <a href="https://fdc.nal.usda.gov/">USDA, 2019</a> <br> <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/971018/McCance_Widdowsons_Composition_of_Foods_Integrated_Dataset_2021..xlsx">COFID, 2021</a> <br> <a href="https://www.fao.org/fileadmin/templates/food_composition/documents/uFiSh1.0.xlsx">uFish, 2016</a> <br> <a href="https://www.fao.org/fileadmin/templates/food_composition/documents/uPulses1.0.xlsx">uPulses, 2017</a> <br></p>
+</section>
+</section>
+<section id="importing-loading-food-composition-tables" class="level3">
+<h3 class="anchored" data-anchor-id="importing-loading-food-composition-tables">2. Importing &amp; Loading Food Composition Tables</h3>
+<p>Before running this scripts make sure that the file <code>TZ08_tidied_FCT_v2.CSV</code> is loaded in your <code>data\</code> folder.</p>
+<section id="loading-the-tanzania-fct-2008" class="level4">
+<h4 class="anchored" data-anchor-id="loading-the-tanzania-fct-2008">2.1 Loading the Tanzania FCT, 2008</h4>
+<p>For the following data check we will focus on the <span class="dark-blue">Food Composition Data</span> from the Tanzania FCT, 2008.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the food composition data </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tzfct <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">".."</span>,  <span class="st">"data"</span>, <span class="st">"TZ08_tidied_FCT_v2.CSV"</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># check the data</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tzfct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fdc_id food_description Food_Group_Code                 Food_Group source_fct
+1      1          Biscuit              A1 Cereal and Cereal products       TZ08
+2      2       Bread roll              A1 Cereal and Cereal products       TZ08
+3      3     Bread, white              A1 Cereal and Cereal products       TZ08
+4      6             Cake              A1 Cereal and Cereal products       TZ08
+5      7           Cookie              A1 Cereal and Cereal products       TZ08
+6      8            Donut              A1 Cereal and Cereal products       TZ08
+  nutrient_data_source ENERCkcal PROCNTg PROANIg MFP_PROTg FAT_g FASATg FAMSg
+1          None listed       434     9.2     0.0         0  11.8    2.1   6.5
+2          None listed       274     8.8     0.0         0     3    0.6   1.2
+3          None listed       274     8.8     0.0         0     3    0.6   1.2
+4          None listed       320     4.7     2.2         0  12.3    3.5   5.3
+5          None listed       478     5.1     0.0         0  21.1    5.4  11.8
+6          None listed       478     5.1     0.0         0  21.1    5.4  11.8
+  FAPUg            CHOCDFg CHOLEmg FIB_g SUCSg PHYTACmg VITA_RAEmcg A_VITAmcg
+1   1.8               71.5       0   2.7   0.4      180           0         0
+2   0.7               51.9       0   2.8   0.1       30           0         0
+3   0.7               51.9       0   2.8   0.1       30           0         0
+4   2.9               48.6      50   0.6  28.2       68          34        34
+5   2.7 67.900000000000006      51   0.5    22      116          27         0
+6   2.7 67.900000000000006      51   0.5    22      116          27         0
+  VITDmcg VITEmcg VITCmg THIAmg RIBFmg              NIAmg VITB6_mg FOLmcg
+1       0       1      0    0.1    0.0 1.1000000000000001      0.0     31
+2       0       0      0    0.6    0.2                2.8      0.0     31
+3       0       0      0    0.1    0.1                0.9      0.0     31
+4       0       1      0    0.0    0.1                0.3      0.0     10
+5       0       3      0    0.0    0.1                  1      0.1     12
+6       0       3      0    0.0    0.1                  1      0.1     12
+  VITB12mg PANTACmg TRPmg THRmg ILEmg LEUmg LYSmg METmg CYSmg PHEmg TYRmg VALmg
+1      0.0      0.5   122   256   334   632   258   159   198   452   274   387
+2      0.0      0.4   102   248   338   616   205   158   192   436   250   382
+3      0.0      0.4   102   248   338   616   205   158   192   436   250   382
+4      0.2      0.3    58   169   209   365   217   107    92   236   169   237
+5      0.1      0.3    70   179   230   390   256   110   104   250   175   263
+6      0.1      0.3    70   179   230   390   256   110   104   250   175   263
+  ARGmg HISmg CAmg Pmg MGmg Kmg NAmg FEmg MFP_FEmg ZNmg CUmg MNmg
+1   366   198  119 105   27 128 1302  1.2        0  0.8  0.2  0.7
+2   320   191  120 105   27 113  609  7.8        0  0.9  0.2  0.5
+3   320   191   10 105   27 113  609  0.5        0  0.9  0.2  0.5
+4   212   109   38  68    9  75  182  0.4        0  0.4  0.0  0.2
+5   221   112   21  80   12  63  357  0.7        0  0.4  0.1  0.3
+6   221   112   21  80   12  63  357  0.7        0  0.4  0.1  0.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tzfct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "fdc_id"               "food_description"     "Food_Group_Code"     
+ [4] "Food_Group"           "source_fct"           "nutrient_data_source"
+ [7] "ENERCkcal"            "PROCNTg"              "PROANIg"             
+[10] "MFP_PROTg"            "FAT_g"                "FASATg"              
+[13] "FAMSg"                "FAPUg"                "CHOCDFg"             
+[16] "CHOLEmg"              "FIB_g"                "SUCSg"               
+[19] "PHYTACmg"             "VITA_RAEmcg"          "A_VITAmcg"           
+[22] "VITDmcg"              "VITEmcg"              "VITCmg"              
+[25] "THIAmg"               "RIBFmg"               "NIAmg"               
+[28] "VITB6_mg"             "FOLmcg"               "VITB12mg"            
+[31] "PANTACmg"             "TRPmg"                "THRmg"               
+[34] "ILEmg"                "LEUmg"                "LYSmg"               
+[37] "METmg"                "CYSmg"                "PHEmg"               
+[40] "TYRmg"                "VALmg"                "ARGmg"               
+[43] "HISmg"                "CAmg"                 "Pmg"                 
+[46] "MGmg"                 "Kmg"                  "NAmg"                
+[49] "FEmg"                 "MFP_FEmg"             "ZNmg"                
+[52] "CUmg"                 "MNmg"                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tzfct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   378 obs. of  53 variables:
+ $ fdc_id              : int  1 2 3 6 7 8 9 33 10 11 ...
+ $ food_description    : chr  "Biscuit" "Bread roll" "Bread, white" "Cake" ...
+ $ Food_Group_Code     : chr  "A1" "A1" "A1" "A1" ...
+ $ Food_Group          : chr  "Cereal and Cereal products" "Cereal and Cereal products" "Cereal and Cereal products" "Cereal and Cereal products" ...
+ $ source_fct          : chr  "TZ08" "TZ08" "TZ08" "TZ08" ...
+ $ nutrient_data_source: chr  "None listed" "None listed" "None listed" "None listed" ...
+ $ ENERCkcal           : num  434 274 274 320 478 478 387 371 119 362 ...
+ $ PROCNTg             : num  9.2 8.8 8.8 4.7 5.1 5.1 14 10.5 2.7 8.1 ...
+ $ PROANIg             : num  0 0 0 2.2 0 0 8.5 0 0 0 ...
+ $ MFP_PROTg           : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ FAT_g               : chr  "11.8" "3" "3" "12.3" ...
+ $ FASATg              : num  2.1 0.6 0.6 3.5 5.4 5.4 0.5 0.2 0.2 0.5 ...
+ $ FAMSg               : num  6.5 1.2 1.2 5.3 11.8 11.8 0.2 0.1 0.3 0.9 ...
+ $ FAPUg               : num  1.8 0.7 0.7 2.9 2.7 2.7 0.2 0.4 0.5 1.6 ...
+ $ CHOCDFg             : chr  "71.5" "51.9" "51.9" "48.6" ...
+ $ CHOLEmg             : num  0 0 0 50 51 51 5 0 0 0 ...
+ $ FIB_g               : num  2.7 2.8 2.8 0.6 0.5 0.5 0.7 2.8 2.4 7.3 ...
+ $ SUCSg               : chr  "0.4" "0.1" "0.1" "28.2" ...
+ $ PHYTACmg            : num  180 30 30 68 116 116 290 288 264 800 ...
+ $ VITA_RAEmcg         : num  0 0 0 34 27 27 3 0 0 0 ...
+ $ A_VITAmcg           : chr  "0" "0" "0" "34" ...
+ $ VITDmcg             : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ VITEmcg             : num  1 0 0 1 3 3 0 0 0 1 ...
+ $ VITCmg              : num  0 0 0 0 0 0 3 0 0 0 ...
+ $ THIAmg              : num  0.1 0.6 0.1 0 0 0 0.2 0 0.1 0.4 ...
+ $ RIBFmg              : num  0 0.2 0.1 0.1 0.1 0.1 0.4 0 0.1 0.2 ...
+ $ NIAmg               : chr  "1.1000000000000001" "2.8" "0.9" "0.3" ...
+ $ VITB6_mg            : num  0 0 0 0 0.1 0.1 0.2 0 0.1 0.3 ...
+ $ FOLmcg              : num  31 31 31 10 12 12 18 0 8 25 ...
+ $ VITB12mg            : num  0 0 0 0.2 0.1 0.1 1 0 0 0 ...
+ $ PANTACmg            : num  0.5 0.4 0.4 0.3 0.3 0.3 1.8 0 0.1 0.4 ...
+ $ TRPmg               : num  122 102 102 58 70 70 184 127 171 19 ...
+ $ THRmg               : num  256 248 248 169 179 179 581 281 353 101 ...
+ $ ILEmg               : num  334 338 338 209 230 230 752 357 515 96 ...
+ $ LEUmg               : num  632 616 616 365 390 ...
+ $ LYSmg               : num  258 205 205 217 256 256 873 228 255 75 ...
+ $ METmg               : num  159 158 158 107 110 110 344 183 207 56 ...
+ $ CYSmg               : num  198 192 192 92 104 104 193 219 375 48 ...
+ $ PHEmg               : num  452 436 436 236 250 250 705 520 647 132 ...
+ $ TYRmg               : num  274 250 250 169 175 175 597 312 350 109 ...
+ $ VALmg               : num  387 382 382 237 263 263 904 415 568 136 ...
+ $ ARGmg               : num  366 320 320 212 221 221 763 417 493 134 ...
+ $ HISmg               : num  198 191 191 109 112 112 359 230 272 82 ...
+ $ CAmg                : num  119 120 10 38 21 21 315 15 2 6 ...
+ $ Pmg                 : num  105 105 105 68 80 80 338 110 80 241 ...
+ $ MGmg                : num  27 27 27 9 12 12 58 22 42 127 ...
+ $ Kmg                 : num  128 113 113 75 63 63 482 109 95 287 ...
+ $ NAmg                : num  1302 609 609 182 357 ...
+ $ FEmg                : num  1.2 7.8 0.5 0.4 0.7 0.7 0.5 1.2 1.2 3.5 ...
+ $ MFP_FEmg            : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ ZNmg                : chr  "0.8" "0.9" "0.9" "0.4" ...
+ $ CUmg                : num  0.2 0.2 0.2 0 0.1 0.1 0.1 0.1 0.1 0.2 ...
+ $ MNmg                : num  0.7 0.5 0.5 0.2 0.3 0.3 0.9 0 0.2 5 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(tzfct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 378  53</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(tzfct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="standardisation-of-the-food-composition-tables" class="level3">
+<h3 class="anchored" data-anchor-id="standardisation-of-the-food-composition-tables">3. Standardisation of the Food Composition Tables</h3>
+<p>Note that this FCT has already been cleaned and prepared for the food matching (see Week 9). Hence, we would be skipping the step 2 of the framework: “Data Standardisation”. Some of the most common standardisation operations for FCTs were covered in Week9. If anyone is interested in knowing more about that, we could share more information about how the Tanzania FCT, 2008 and other FCTs are cleaned and standardised.</p>
+<section id="evaluating-the-tanzania-fct-2008" class="level4">
+<h4 class="anchored" data-anchor-id="evaluating-the-tanzania-fct-2008">3.1. Evaluating the Tanzania FCT, 2008</h4>
+<ol type="1">
+<li>How many foods are reported in the Tanzania FCT?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(tzfct<span class="sc">$</span>food_description)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 378</code></pre>
+</div>
+</div>
+<p>We can also check the number of foods reported in each Food Group?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Food_Group) <span class="sc">%&gt;%</span>  <span class="co"># grouping food items by food groups</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>() <span class="sc">%&gt;%</span>               <span class="co"># counting no. of food items per food group</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))         <span class="co"># sorting by most to least reported foods</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 2
+# Groups:   Food_Group [16]
+   Food_Group                                      n
+   &lt;chr&gt;                                       &lt;int&gt;
+ 1 Cereal-based local dishes                      36
+ 2 Fruits and Fruit Juice                         35
+ 3 Vegetables                                     34
+ 4 Cereal and Cereal products                     31
+ 5 Miscellaneous                                  31
+ 6 Vegetables Based                               31
+ 7 Roots, Tubers and Banana-based local dishes    29
+ 8 Meat, poultry and fish-based local dishes      28
+ 9 Pulses, Nuts and Seeds                         27
+10 Meat, poultry and fish                         23
+11 Roots, Tubers and Banana                       17
+12 Pulses, Nuts and Seeds-based local dishes      15
+13 Oils and fats                                  14
+14 Milk and milk products                         11
+15 Fruit Based Local Dishes                        8
+16 Miscellaneous-local dishes                      8</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>What nutrients and other food components are reported?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tzfct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "fdc_id"               "food_description"     "Food_Group_Code"     
+ [4] "Food_Group"           "source_fct"           "nutrient_data_source"
+ [7] "ENERCkcal"            "PROCNTg"              "PROANIg"             
+[10] "MFP_PROTg"            "FAT_g"                "FASATg"              
+[13] "FAMSg"                "FAPUg"                "CHOCDFg"             
+[16] "CHOLEmg"              "FIB_g"                "SUCSg"               
+[19] "PHYTACmg"             "VITA_RAEmcg"          "A_VITAmcg"           
+[22] "VITDmcg"              "VITEmcg"              "VITCmg"              
+[25] "THIAmg"               "RIBFmg"               "NIAmg"               
+[28] "VITB6_mg"             "FOLmcg"               "VITB12mg"            
+[31] "PANTACmg"             "TRPmg"                "THRmg"               
+[34] "ILEmg"                "LEUmg"                "LYSmg"               
+[37] "METmg"                "CYSmg"                "PHEmg"               
+[40] "TYRmg"                "VALmg"                "ARGmg"               
+[43] "HISmg"                "CAmg"                 "Pmg"                 
+[46] "MGmg"                 "Kmg"                  "NAmg"                
+[49] "FEmg"                 "MFP_FEmg"             "ZNmg"                
+[52] "CUmg"                 "MNmg"                </code></pre>
+</div>
+</div>
+</section>
+<section id="checking-missing-values" class="level4">
+<h4 class="anchored" data-anchor-id="checking-missing-values">3.2 Checking missing values</h4>
+<section id="checking-food-components" class="level5">
+<h5 class="anchored" data-anchor-id="checking-food-components">3.2.1. Checking food components</h5>
+<p>We can see that for those food items reported in the Tanzania FCT, 2008. There were no missing values for any of the nutrients. This would prevent us from needing to impute nutrient values for any of the food matched to the Tanzania FCT, 2008 foods.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> naniar<span class="sc">::</span><span class="fu">vis_miss</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="food-matching_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What components are needed to calculate Energy?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 6
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Proteins, Total fats, Carbohydrates (available), Fibre and Alcohol.</p>
+</div>
+</div>
+</div>
+<p>We can see that in the Tanzania FCT, 2008, Alcohol is not reported, this is problematic when we want to calculate and/or compare alcoholic beverages such as beer.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what components are needed to calculate Energy?</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fdc_id, food_description, PROCNTg, FAT_g, CHOCDFg, FIB_g) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fdc_id food_description PROCNTg FAT_g            CHOCDFg FIB_g
+1      1          Biscuit     9.2  11.8               71.5   2.7
+2      2       Bread roll     8.8     3               51.9   2.8
+3      3     Bread, white     8.8     3               51.9   2.8
+4      6             Cake     4.7  12.3               48.6   0.6
+5      7           Cookie     5.1  21.1 67.900000000000006   0.5
+6      8            Donut     5.1  21.1 67.900000000000006   0.5</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What components are needed to calculate Sum of Proximate (SOP)?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 7
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Water, Proteins, Total fats, Carbohydrates (available), Fibre and Alcohol.</p>
+</div>
+</div>
+</div>
+<p>We can see that alcohol, and more importantly water content is not available in the Tanzania FCT, 2008. Therefore, we will not be able to calculate this component which is often used to evaluate the quality of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># what components are needed to calculate SOP?</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fdc_id, food_description,  PROCNTg, FAT_g, CHOCDFg, FIB_g) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fdc_id food_description PROCNTg FAT_g            CHOCDFg FIB_g
+1      1          Biscuit     9.2  11.8               71.5   2.7
+2      2       Bread roll     8.8     3               51.9   2.8
+3      3     Bread, white     8.8     3               51.9   2.8
+4      6             Cake     4.7  12.3               48.6   0.6
+5      7           Cookie     5.1  21.1 67.900000000000006   0.5
+6      8            Donut     5.1  21.1 67.900000000000006   0.5</code></pre>
+</div>
+</div>
+</section>
+<section id="checking-food-reported" class="level5">
+<h5 class="anchored" data-anchor-id="checking-food-reported">3.2.2. Checking food reported</h5>
+<p>It is important to check the coverage of foods and food groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> naniar<span class="sc">::</span><span class="fu">gg_miss_fct</span>(., Food_Group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="food-matching_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Here, we are filtering the foods in the FCT by a specific food group, for instance “Cereals and Cereals products”.</p>
+<p>There are other food groups in the Tanzania FCT, 2008:</p>
+<p>Cereal and Cereal products, Cereal-based local dishes, Roots, Tubers and Banana, Roots, Tubers and Banana-based local dishes, Pulses, Nuts and Seeds, Pulses, Nuts and Seeds-based local dishes, Meat, poultry and fish, Meat, poultry and fish-based local dishes, Milk and milk products, Oils and fats, Fruits and Fruit Juice, Fruit Based Local Dishes, Vegetables, Vegetables Based, Miscellaneous, Miscellaneous-local dishes</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exploring composition of the foods groups</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Food_Group <span class="sc">==</span> <span class="st">"Cereal and Cereal products"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fdc_id, food_description, ENERCkcal, VITA_RAEmcg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   fdc_id                     food_description ENERCkcal VITA_RAEmcg
+1       1                              Biscuit     434.0         0.0
+2       2                           Bread roll     274.0         0.0
+3       3                         Bread, white     274.0         0.0
+4       6                                 Cake     320.0        34.0
+5       7                               Cookie     478.0        27.0
+6       8                                Donut     478.0        27.0
+7       9               Infant cereal, Cerelac     387.0         3.0
+8      33                Macaroni or spaghetti     371.0         0.0
+9      10               Maize, cracked, cooked     119.0         0.0
+10     11                    Maize, dried, raw     362.0         0.0
+11     12                    Maize, flour, dry     362.0         0.0
+12     13                 Maize, green, cooked     246.0         0.0
+13     14          Maize, on the cob, immature      59.0         7.0
+14     15                 Maize, yellow, flour     362.0        11.0
+15     16                      Millet, bulrush     361.0        20.0
+16     17       Millet, finger, grain or flour     328.0         5.0
+17     34 Mixed porridge flour (maize and oil)     414.4         0.6
+18     19      Mixed porridge flour (no maize)     332.2         3.5
+19     18    Mixed porridge flour (with maize)     382.2         2.3
+20     20                  Porridge, fermented      43.0         0.0
+21     22                   Rice, flour, local     366.0         0.0
+22     21               Rice, fried and boiled     174.0        87.0
+23     23              Rice, white, grain, raw     358.0         0.0
+24     35                             Semolina     364.0         0.0
+25     24                              Sorghum     339.0         6.0
+26     26                       Sorghum, flour     339.0         7.0
+27     27                 Vermicelli, uncooked     395.0         0.0
+28     29            Wheat, flour, whole grain     339.0         0.0
+29     28              Wheat,dough, deep fried     317.0         0.0
+30     30           Wheat, flour, 0.72 extract     364.0         0.0
+31     31                  Wheat, flour, maida     349.0         0.0</code></pre>
+</div>
+</div>
+<p>More importantly, we need to check that the foods reported as consumed by the household members are present in the FCT(s) that we are using.</p>
+<p>Let’s have a look at the food list…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(food_consumed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 81%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">item_id</th>
+<th style="text-align: left;">itemcode</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1003</td>
+<td style="text-align: left;">SALT</td>
+<td style="text-align: right;">1089</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">601</td>
+<td style="text-align: left;">ONIONS, TOMATOES, CARROTS AND GREEN PEPPER, OTHER VIUNGO</td>
+<td style="text-align: right;">1045</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1001</td>
+<td style="text-align: left;">COOKING OIL</td>
+<td style="text-align: right;">978</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">105</td>
+<td style="text-align: left;">MAIZE (FLOUR)</td>
+<td style="text-align: right;">940</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">301</td>
+<td style="text-align: left;">SUGAR</td>
+<td style="text-align: right;">877</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">602</td>
+<td style="text-align: left;">SPINACH, CABBAGE AND OTHER GREEN VEGETABLES</td>
+<td style="text-align: right;">875</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">401</td>
+<td style="text-align: left;">PEAS, BEANS, LENTILS AND OTHER PULSES</td>
+<td style="text-align: right;">834</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">102</td>
+<td style="text-align: left;">RICE (HUSKED)</td>
+<td style="text-align: right;">748</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1101</td>
+<td style="text-align: left;">TEA DRY</td>
+<td style="text-align: right;">667</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">808</td>
+<td style="text-align: left;">FRESH FISH AND SEAFOOD (INCLUDING DAGAA)</td>
+<td style="text-align: right;">646</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">809</td>
+<td style="text-align: left;">DRIED/SALTED/CANNED FISH AND SEAFOOD (INCL. DAGAA)</td>
+<td style="text-align: right;">459</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">110</td>
+<td style="text-align: left;">BUNS, CAKES AND BISCUITS</td>
+<td style="text-align: right;">453</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">802</td>
+<td style="text-align: left;">BEEF INCLUDING MINCED SAUSAGE</td>
+<td style="text-align: right;">420</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">201</td>
+<td style="text-align: left;">CASSAVA FRESH</td>
+<td style="text-align: right;">383</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">702</td>
+<td style="text-align: left;">CITRUS FRUITS (ORANGES, LEMON, TANGERINES, ETC.)</td>
+<td style="text-align: right;">375</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">502</td>
+<td style="text-align: left;">COCONUTS (MATURE/IMMATURE)</td>
+<td style="text-align: right;">374</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">206</td>
+<td style="text-align: left;">COOKING BANANAS, PLANTAINS</td>
+<td style="text-align: right;">368</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">703</td>
+<td style="text-align: left;">MANGOES, AVOCADOES AND OTHER FRUITS</td>
+<td style="text-align: right;">349</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">205</td>
+<td style="text-align: left;">IRISH POTATOES</td>
+<td style="text-align: right;">344</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">203</td>
+<td style="text-align: left;">SWEET POTATOES</td>
+<td style="text-align: right;">335</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">701</td>
+<td style="text-align: left;">RIPE BANANAS</td>
+<td style="text-align: right;">293</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">901</td>
+<td style="text-align: left;">FRESH MILK</td>
+<td style="text-align: right;">262</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">109</td>
+<td style="text-align: left;">BREAD</td>
+<td style="text-align: right;">228</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1081</td>
+<td style="text-align: left;">WHEAT FLOUR</td>
+<td style="text-align: right;">216</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">501</td>
+<td style="text-align: left;">GROUNDNUTS IN SHELL/SHELLED</td>
+<td style="text-align: right;">214</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1104</td>
+<td style="text-align: left;">BOTTLED/CANNED SOFT DRINKS (SODA, JUICE, WATER)</td>
+<td style="text-align: right;">211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">807</td>
+<td style="text-align: left;">EGGS</td>
+<td style="text-align: right;">207</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">804</td>
+<td style="text-align: left;">CHICKEN AND OTHER POULTRY</td>
+<td style="text-align: right;">206</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">202</td>
+<td style="text-align: left;">CASSAVA DRY/FLOUR</td>
+<td style="text-align: right;">186</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1004</td>
+<td style="text-align: left;">OTHER SPICES</td>
+<td style="text-align: right;">153</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">704</td>
+<td style="text-align: left;">SUGARCANE</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">902</td>
+<td style="text-align: left;">MILK PRODUCTS (LIKE CREAM, CHEESE, YOGHURT ETC)</td>
+<td style="text-align: right;">110</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">111</td>
+<td style="text-align: left;">MACARONI, SPAGHETTI</td>
+<td style="text-align: right;">106</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">103</td>
+<td style="text-align: left;">MAIZE (GREEN, COB)</td>
+<td style="text-align: right;">103</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">204</td>
+<td style="text-align: left;">YAMS/COCOYAMS</td>
+<td style="text-align: right;">99</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">104</td>
+<td style="text-align: left;">MAIZE (GRAIN)</td>
+<td style="text-align: right;">97</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">107</td>
+<td style="text-align: left;">MILLET AND SORGHUM (FLOUR)</td>
+<td style="text-align: right;">89</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">303</td>
+<td style="text-align: left;">HONEY, SYRUPS, JAMS, MARMALADE, JELLIES, CANNED FRUITS</td>
+<td style="text-align: right;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">801</td>
+<td style="text-align: left;">GOAT MEAT</td>
+<td style="text-align: right;">86</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">603</td>
+<td style="text-align: left;">CANNED, DRIED AND WILD VEGETABLES</td>
+<td style="text-align: right;">84</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">302</td>
+<td style="text-align: left;">SWEETS</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">803</td>
+<td style="text-align: left;">PORK INCLUDING SAUSAGES AND BACON</td>
+<td style="text-align: right;">49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1002</td>
+<td style="text-align: left;">BUTTER, MARGARINE, GHEE AND OTHER FAT PRODUCTS</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1107</td>
+<td style="text-align: left;">LOCAL BREWS</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1103</td>
+<td style="text-align: left;">OTHER RAW MATERIALS FOR DRINKS</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1106</td>
+<td style="text-align: left;">BOTTLED BEER</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">112</td>
+<td style="text-align: left;">OTHER CEREAL PRODUCTS</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">503</td>
+<td style="text-align: left;">CASHEW, ALMONDS AND OTHER NUTS</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1102</td>
+<td style="text-align: left;">COFFEE AND COCOA</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">903</td>
+<td style="text-align: left;">CANNED MILK/MILK POWDER</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">207</td>
+<td style="text-align: left;">OTHER STARCHES</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">101</td>
+<td style="text-align: left;">RICE (PADDY)</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1082</td>
+<td style="text-align: left;">WHEAT, BARLEY GRAIN AND OTHER CEREALS</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1108</td>
+<td style="text-align: left;">WINE AND SPIRITS</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">106</td>
+<td style="text-align: left;">MILLET AND SORGHUM (GRAIN)</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">504</td>
+<td style="text-align: left;">SEEDS AND PRODUCTS FROM NUTS/SEEDS (EXCL. COOKING OIL)</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">806</td>
+<td style="text-align: left;">OTHER DOMESTIC/WILD MEAT PRODUCTS</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1105</td>
+<td style="text-align: left;">PREPARED TEA, COFFEE</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">805</td>
+<td style="text-align: left;">WILD BIRDS AND INSECTS</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Let’s find some of those food items: salt, tomato</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"salt|tomato"</span>, food_description, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   fdc_id                              food_description Food_Group_Code
+1     537         Vermicelli with coconut milk and salt              A2
+2     354                 Potato, crisps, plain, salted              B1
+3     970                    Taro, cooked, without salt              B2
+4     153    Beans, kidney, mature, boiled without salt              C1
+5     176 Hyacinth-beans, immature, boiled without salt              C1
+6     557        Small dried fish with tomatoes and oil              D2
+7    1101                              Butter with salt               E
+8     405              Cauliflower, cooked without salt              F3
+9     421            Tomato, bitter (African egg plant)              F3
+10    422                                 Tomato, green              F3
+11    423                                  Tomato, ripe              F3
+12    785                                 Tomato relish              F4
+13    463                                 Salt, iodized              G1
+14    464                             Salt, non-iodized              G1
+15    489                                  Tomato juice              G1
+16    470                                Tomato ketchup              G1
+17    478                                  Tomato paste              G1
+                                    Food_Group source_fct nutrient_data_source
+1                    Cereal-based local dishes       TZ08          None listed
+2                     Roots, Tubers and Banana       TZ08          None listed
+3  Roots, Tubers and Banana-based local dishes       TZ08          None listed
+4                       Pulses, Nuts and Seeds       TZ08          None listed
+5                       Pulses, Nuts and Seeds       TZ08          None listed
+6    Meat, poultry and fish-based local dishes       TZ08          None listed
+7                                Oils and fats       TZ08          None listed
+8                                   Vegetables       TZ08          None listed
+9                                   Vegetables       TZ08          None listed
+10                                  Vegetables       TZ08          None listed
+11                                  Vegetables       TZ08          None listed
+12                            Vegetables Based       TZ08          None listed
+13                               Miscellaneous       TZ08          None listed
+14                               Miscellaneous       TZ08          None listed
+15                               Miscellaneous       TZ08          None listed
+16                               Miscellaneous       TZ08          None listed
+17                               Miscellaneous       TZ08          None listed
+   ENERCkcal PROCNTg PROANIg MFP_PROTg              FAT_g FASATg FAMSg FAPUg
+1      260.4     7.7     0.0       0.0                6.2    4.8   0.4   0.5
+2      547.0     6.6     0.0       0.0               37.5   11.0   9.8  12.2
+3      142.0     0.5     0.0       0.0                0.1    0.0   0.0   0.0
+4      127.0     8.7     0.0       0.0                0.5    0.1   0.0   0.3
+5       50.0     3.0     0.0       0.0                0.3    0.1   0.1   0.0
+6      100.1     7.7     7.3       7.3                6.9    5.1   0.8   0.4
+7      717.0     0.9     0.9       0.0 81.099999999999994   51.4  21.0   3.0
+8       12.0     0.7     0.0       0.0                0.1    0.0   0.0   0.0
+9       22.0     1.0     0.0       0.0                0.4    0.1   0.0   0.2
+10      21.0     0.9     0.0       0.0                0.3    0.0   0.1   0.1
+11      21.0     0.9     0.0       0.0                0.3    0.0   0.1   0.1
+12      34.0     1.1     0.0       0.0                0.3    0.1   0.1   0.1
+13       0.0     0.0     0.0       0.0                  0    0.0   0.0   0.0
+14       0.0     0.0     0.0       0.0                  0    0.0   0.0   0.0
+15      26.0     0.8     0.0       0.0                0.1    0.0   0.0   0.0
+16     101.0     1.0     0.0       0.0                0.3    0.0   0.1   0.1
+17      63.0     0.0     2.7       0.0                  0   13.8   0.0   0.3
+              CHOCDFg CHOLEmg FIB_g              SUCSg PHYTACmg VITA_RAEmcg
+1                43.3     0.0   2.9                0.7    179.0         0.0
+2                49.7     0.0   4.4                0.4    147.0       245.0
+3                34.6     0.0   5.1                0.5     78.0         4.0
+4                22.8     0.0   6.4                0.3    617.0         0.0
+5  9.1999999999999993     0.0   3.9                3.4     20.0         5.0
+6  2.2000000000000002     7.1   0.5                0.2      0.1        34.4
+7                   0   215.0   0.0                  0      0.0       684.0
+8                 2.6     0.0   1.1                0.2      0.0         6.0
+9                 4.5     0.0   2.8                0.5      6.0        13.0
+10 4.5999999999999996     0.0   1.1                  0      6.0        87.0
+11 4.5999999999999996     0.0   1.1                  0      6.0        87.0
+12                5.2     0.0   1.7                  0     20.9        56.0
+13                  0     0.0   0.0                  0      0.0         0.0
+14                  0     0.0   0.0                  0      0.0         0.0
+15                5.7     0.0   1.1                  0      7.0        80.0
+16               25.3     0.0   1.3 19.399999999999999      7.0       100.0
+17                0.9     0.3   0.0                3.3     18.0       261.0
+   A_VITAmcg VITDmcg VITEmcg VITCmg THIAmg RIBFmg NIAmg VITB6_mg FOLmcg
+1          0     0.0     0.2    0.5    0.0    0.0   0.7      0.1   15.3
+2        574   642.0   951.0  962.0  250.0  202.0   702    588.0  890.0
+3          0     0.0     2.4    5.0    0.1    0.5   1.5      0.3   19.0
+4          0     0.0     0.0    1.2    0.2    0.1   0.6      0.1  130.0
+5          0     0.0     0.0   12.9    0.1    0.1   0.5      0.0   62.0
+6          0     0.6     0.1    4.7    0.1    0.1   2.7      0.2   15.8
+7        684     2.0     0.4    0.0    0.0    0.2   0.7      0.0    3.0
+8          0     0.0     0.0   16.0    0.0    0.0   0.1      0.1   21.0
+9          0     0.0     0.0   20.0    0.1    0.1   0.3      0.1   20.0
+10         0     0.0     0.0   19.0    0.1    0.1   0.6      0.1   15.0
+11         0     0.0     0.0   19.0    0.1    0.1   0.6      0.1   15.0
+12         0     0.0     0.0   18.0    0.1    0.1   0.6      0.1   13.0
+13         0     0.0     0.0    0.0    0.0    0.0     0      0.0    0.0
+14         0     0.0     0.0    0.0    0.0    0.0     0      0.0    0.0
+15         0     0.0     0.3   26.0    0.1    0.0     1      0.2   28.0
+16         0     0.0     0.0   22.0    0.1    0.1   0.7      0.1   17.0
+17         0     0.0     0.0   57.0    0.2    0.2   1.8      0.2   45.0
+   VITB12mg PANTACmg TRPmg THRmg ILEmg LEUmg LYSmg METmg CYSmg PHEmg TYRmg
+1       0.0      0.2  57.0 173.0   199   686 103.0  84.5  66.0 147.5 258.0
+2     729.0    347.0   0.0   0.0     0     0  13.0   0.1   0.0   1.4   0.3
+3       0.0      0.3   0.1   0.0     0     0   0.0   0.0   0.0   0.0   0.0
+4       0.0      0.2 140.0 319.0    41   736 607.0 113.0  81.0 511.0 205.0
+5       0.0      0.1  26.0 124.0   201   307 203.0  26.0  26.0  65.0  53.0
+6       3.7      0.6  67.5 260.7   175  3305 777.5 111.0  44.7 151.5 126.0
+7       0.2      0.0  12.0  38.0    51    83  67.0  21.0   8.0  41.0  41.0
+8       0.0      0.1  15.0  49.0    72    73  67.0  14.0  12.0  45.0  24.0
+9       0.0      0.1  10.0  35.0    51    52  47.0  10.0   8.0  32.0  17.0
+10      0.0      0.3   6.0  21.0    20    31  31.0   7.0  11.0  22.0  15.0
+11      0.0      0.3   6.0  21.0    20    31  31.0   7.0  11.0  22.0  15.0
+12      0.0      0.3  11.0  28.0    31    40  45.0   9.0   6.6  29.0  14.6
+13      0.0      0.0   0.0   0.0     0     0   0.0   0.0   0.0   0.0   0.0
+14      0.0      0.0   0.0   0.0     0     0   0.0   0.0   0.0   0.0   0.0
+15      0.0      0.4   5.0  17.0    15    21  22.0   4.0   2.0  16.0  12.0
+16      0.0      0.3   7.0  24.0    23    36  36.0   8.0  13.0  25.0  17.0
+17      0.0      0.8  18.0  63.0    60    93  93.0  21.0  33.0  66.0  45.0
+   VALmg ARGmg HISmg   CAmg   Pmg  MGmg   Kmg     NAmg FEmg MFP_FEmg
+1  163.5 113.0  67.1   13.4 100.6  32.4 109.7    177.3  1.2      0.0
+2    9.0   0.0   0.6   19.0  93.0  34.0 732.0    216.0  0.8      0.0
+3    0.0   0.0   0.0   18.0  76.0  30.0 484.0     15.0  0.7      0.0
+4  500.0 475.0 238.0   28.0 142.0  45.0 403.0      2.0  2.9      0.0
+5  318.0 201.0 124.0   41.0  49.0  42.0 262.0      2.0  0.8      0.0
+6  194.7 229.7 111.7 1139.1 884.0 100.5 771.6    213.0  1.9      1.6
+7   57.0  31.0  23.0   17.0  24.0   2.0  24.0    576.0  0.0      0.0
+8   61.0  81.0  29.0   23.0  11.0   7.0 121.0      9.0  0.3      0.0
+9   43.0  57.0  20.0   31.0  15.0   8.0  97.0      8.0  0.2      0.0
+10  22.0  21.0  13.0    5.0  24.0  11.0 222.0      9.0  0.5      0.0
+11  22.0  21.0  13.0    5.0  24.0  11.0 222.0      9.0  0.5      0.0
+12  27.0  65.0  17.0   10.0  32.0  13.0 250.0      9.0  0.5      0.0
+13   0.0   0.0   0.0   45.0   0.0   2.0   8.0  38724.0  0.1      0.0
+14   0.0   0.0   0.0   45.0   0.0   2.0   8.0  38724.0  0.1      0.0
+15  15.0  15.0  12.0    5.0   1.0  11.0 235.0     26.0  0.9      0.0
+16  25.0  24.0  15.0  456.0  28.0  33.0 335.0 387250.0  1.6      0.0
+17  66.0  63.0  39.0   15.0  72.0  33.0 666.0     27.0  1.5      0.0
+                 ZNmg CUmg MNmg
+1                 0.9  0.2  0.7
+2                 0.4  0.1  0.2
+3                 0.3  0.2  0.4
+4  1.1000000000000001  0.2  0.5
+5                 0.4  0.0  0.2
+6                 3.5  0.3  1.4
+7                 0.1  0.0  0.0
+8                 0.1  0.0  0.1
+9                 0.1  0.0  0.1
+10                0.1  0.1  0.1
+11                0.1  0.1  0.1
+12                0.1  0.1  0.3
+13                  0  0.0  0.0
+14                  0  0.0  0.0
+15                0.7  0.6  0.2
+16                0.1  0.4  0.1
+17                0.3  0.2  0.3</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Question 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The foods above, to what food groups do they belong?</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Answer 8
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Cereal-based local dishes, Roots, Tubers and Banana, Roots, Tubers and Banana-based local dishes, Pulses, Nuts and Seeds, Meat, poultry and fish-based local dishes, Oils and fats, Vegetables, Vegetables Based, Miscellaneous</p>
+</div>
+</div>
+</div>
+<p>Now, we can explore composition of filtered foods. Let’s see the Vitamin A content of the different tomato products.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tzfct <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"tomato"</span>, food_description, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fdc_id, food_description,  VITA_RAEmcg )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fdc_id                       food_description VITA_RAEmcg
+1    557 Small dried fish with tomatoes and oil        34.4
+2    421     Tomato, bitter (African egg plant)        13.0
+3    422                          Tomato, green        87.0
+4    423                           Tomato, ripe        87.0
+5    785                          Tomato relish        56.0
+6    489                           Tomato juice        80.0
+7    470                         Tomato ketchup       100.0
+8    478                           Tomato paste       261.0</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Activity 1: What do you think about the results? How do they compare with other FCTs?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<ol type="1">
+<li>What do you think about the Vitamin A content of green tomato vs red tomato?</li>
+</ol>
+</section>
+</section>
+</section>
+<section id="harmonising-the-food-composition-tables" class="level3">
+<h3 class="anchored" data-anchor-id="harmonising-the-food-composition-tables">4. Harmonising the Food Composition Tables</h3>
+<p>When all the FCTs are standardised, we can use them all together, hence if a food item is missing in Tanzania FCT, 2008, then a similar food item will be found in another FCT.</p>
+<section id="food-matching" class="level4">
+<h4 class="anchored" data-anchor-id="food-matching">4.1. Food matching</h4>
+<p>After the FCTs are standardised and harmonised and the food list (i.e., food reported as consumed in the NPS-DSS 2019-2020), we can proceed to match them together. To do so, we are using a standardised list of foods that we called “food dictionary”. As depicted in the <strong>?@fig-matching</strong>.</p>
+<p><img src="presentation/images/food-matching.png" id="fig-matching" class="img-fluid"></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Activity 2: Thinking about food matches between HCES food list and food composition.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"Week-10"</span>,  <span class="st">"data"</span>, <span class="st">"tz_food-matches_v.1.0.0.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="https://github.com/dzvoti/TFNC-Training/blob/main/Week-10/Materials/data/tz_food-matches_v.1.0.0.csv">Tanzania matches</a></p>
+<ol type="1">
+<li>Do you think that the food matches selected represents well what it is consumed in Tanzania?</li>
+<li>If not, what other foods would you add/remove/change to?</li>
+<li>For the foods without matches, can you think of what food items you would use?</li>
+<li>Could you identify any food matches in the Tanzania FCT, 2008 that will be a good match for those foods that have no matches?</li>
+<li>What nutrients are important for each of the foods selected?</li>
+</ol>
+</section>
+</section>
+</section>
+<section id="further-readings" class="level2">
+<h2 class="anchored" data-anchor-id="further-readings">Further Readings</h2>
+<p><br></p>
+<ul>
+<li>Greenfield, Heather, and D. A. T. Southgate. Food Composition Data: Production, Management, and Use. Rome: FAO, 2003.</li>
+<li>‘FAO/INFOODS (2012). FAO/INFOODS Guidelines for Checking Food Composition Data Prior to the Publication of a User Table/Database-Version 1.0. FAO, Rome’. Accessed 22 January 2022. https://www.fao.org/3/ap810e/ap810e.pdf.</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
