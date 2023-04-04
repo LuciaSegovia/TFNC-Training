@@ -25,7 +25,7 @@
 | [Week 10](Week-10)/ 21 Mar 2023            | [Food consumption data and food matching (contd.)](https://github.com/dzvoti/TFNC-Training/blob/main/Week-9/Materials/2023-03-06_Food-composition-and-food-matching.pdf)                                                                          | [Watch session 1](https://drive.google.com/file/d/1BluRJwP93Kf-Pzh0OEiZ9UmqAdQw0MvU/view?usp=share_link)                                                                                                                                                                                                                                        |       [Week 10 Script](https://github.com/dzvoti/TFNC-Training/blob/main/Week-10/Materials/matching_activity1.R)|  
 
 
-[Week 10 Materials](https://github.com/LuciaSegovia/TFNC-Training/blob/main/Week-10/Materials/food-matching.html){target="_blank"} 
+[Week 10 Materials](https://LuciaSegovia.github.io/TFNC-Training/)
 
 
 # References and Additional Resources
